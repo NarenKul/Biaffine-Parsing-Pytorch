@@ -1,0 +1,36 @@
+Parsing Primitive Numbers
+In Java, numbers and Booleans are primitive types—not objects. But for each primitive type, Java also defines a primitive wrapper class. Specifically, the java.lang package includes the following classes: Byte, Short, Integer, Long, Float, Double, and Boolean. We talked about these in Chapter 1, but we bring them up now because these classes hold static utility methods that know how to parse their respective types from strings. Each of these primitive wrapper classes has a static “parse” method that reads a String and returns the corresponding primitive type. For example:
+
+    byte b = Byte.parseByte("16");
+    int n = Integer.parseInt( "42" );
+    long l = Long.parseLong( "99999999999" );
+    float f = Float.parseFloat( "4.2" );
+    double d = Double.parseDouble( "99.99999999" );
+    boolean b = Boolean.parseBoolean("true");
+    // Prior to Java 5.0 use:
+    boolean b = new Boolean("true").booleanValue();
+Alternately, the java.util.Scanner provides a single API for not only parsing individual primitive types from strings, but reading them from a stream of tokens. This example shows how to use it in place of the preceding wrapper classes:
+
+    byte b = new Scanner("16").nextByte();
+    int n = new Scanner("42").nextInt();
+    long l = new Scanner("99999999999").nextLong();
+    float f = new Scanner("4.2").nextFloat();
+    double d = new Scanner("99.99999999").nextDouble();
+    boolean b = new Scanner("true").nextBoolean();
+We’ll see Scanner used to parse multiple values from a String or stream when we discuss tokenizing text later in this chapter.
+
+Working with alternate bases
+It’s easy to parse integer type numbers (byte, short, int, long) in alternate numeric bases. You can use the parse methods of the primitive wrapper classes by simply specifying the base as a second parameter:
+
+    long l = Long.parseLong( "CAFEBABE", 16 );  // l = 3405691582
+    byte b = Byte.parseByte ( "12", 8 ); // b = 10
+All methods of the Java 5.0 Scanner class described earlier also accept a base as an optional argument:
+
+    long l = new Scanner( "CAFEBABE" ).nextLong( 16 );  // l = 3405691582
+    byte b = new Scanner( "12" ).nextByte( 8 ); // b = 10
+You can go the other way and convert a long or integer value to a string value in a specified base using special static toString() methods of the Integer and Long classes:
+
+    String s = Long.toString( 3405691582L, 16 );  // s = "cafebabe"
+For convenience, each class also has a static toHexString() method for working with base 16:
+
+    String s = Integer.toHexString( 255 ).toUpperCase();  // s = "FF";
